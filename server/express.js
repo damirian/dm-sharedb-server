@@ -123,6 +123,7 @@ module.exports = (backend, appRoutes, error, options, cb) => {
     // Client Apps routes
     // Memoize getting the end-user <head> code
     let getHead = _.memoize(options.getHead || (() => ''))
+    let getTail = options.getTail || (() => '')
 
     function getClientEnv () {
       let env = {}
@@ -147,6 +148,7 @@ module.exports = (backend, appRoutes, error, options, cb) => {
             styles: process.env.NODE_ENV === 'production'
                 ? resourceManager.getProductionStyles(appName) : '',
             head: getHead(appName),
+            tail: getTail(appName),
             modelBundle: bundle,
             jsBundle: resourceManager.getResourcePath('bundle', appName),
             env: getClientEnv()
